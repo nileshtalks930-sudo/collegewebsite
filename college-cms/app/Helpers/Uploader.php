@@ -68,13 +68,40 @@ final class Uploader
         ];
     }
 
+    public static function storeMany(
+        array $files,
+        string $subdir,
+        array $allowedExtensions,
+        array $allowedMime,
+        int $maxBytes = 5242880
+    ): array {
+        $results = [];
+        $names = $files['name'] ?? [];
+        if (!is_array($names)) {
+            $single = self::store($files, $subdir, $allowedExtensions, $allowedMime, $maxBytes);
+            return [$single];
+        }
+
+        foreach ($names as $i => $name) {
+            $file = [
+                'name' => $name,
+                'type' => $files['type'][$i] ?? '',
+                'tmp_name' => $files['tmp_name'][$i] ?? '',
+                'error' => $files['error'][$i] ?? UPLOAD_ERR_NO_FILE,
+                'size' => $files['size'][$i] ?? 0,
+            ];
+            $results[] = self::store($file, $subdir, $allowedExtensions, $allowedMime, $maxBytes);
+        }
+
+        return $results;
+    }
+
     public static function deletePublic(?string $relativePath): void
     {
         if ($relativePath === null || $relativePath === '') {
             return;
         }
 
-        // Only allow deleting inside public/uploads
         $relativePath = ltrim(str_replace('\\', '/', $relativePath), '/');
         if (!str_starts_with($relativePath, 'uploads/')) {
             return;

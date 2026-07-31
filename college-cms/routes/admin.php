@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Controllers\Admin\AuthController;
 use App\Controllers\Admin\DashboardController;
+use App\Controllers\Admin\DepartmentController;
 use App\Controllers\Admin\MenuController;
 use App\Controllers\Admin\PageController;
 use App\Controllers\Admin\UserController;
@@ -48,3 +49,13 @@ $router->post('/pages', [PageController::class, 'store']);
 $router->get('/pages/{id}/edit', [PageController::class, 'edit']);
 $router->post('/pages/{id}/update', [PageController::class, 'update']);
 $router->post('/pages/{id}/delete', [PageController::class, 'destroy']);
+
+// Department Module
+$router->get('/departments', [DepartmentController::class, 'index']);
+$router->get('/departments/create', [DepartmentController::class, 'create']);
+$router->post('/departments', [DepartmentController::class, 'store']);
+$router->get('/departments/{id}/edit', [DepartmentController::class, 'edit']);
+$router->post('/departments/{id}/update', [DepartmentController::class, 'update']);
+$router->post('/departments/{id}/delete', [DepartmentController::class, 'destroy']);
+$router->post('/departments/{id}/downloads/{downloadId}/delete', [DepartmentController::class, 'deleteDownload']);
+$router->post('/departments/{id}/gallery/{imageId}/delete', [DepartmentController::class, 'deleteGallery']);
