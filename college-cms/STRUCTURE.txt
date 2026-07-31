@@ -1,0 +1,108 @@
+College Website CMS — Project Structure
+=======================================
+
+Stack: PHP 8.2 · MySQL · Bootstrap 5 · AdminLTE · PDO · MVC
+
+college-cms/
+│
+├── public/                          # Frontend document root
+│   ├── index.php                    # Front controller (public site)
+│   ├── assets/                      # Bootstrap 5 + site CSS/JS/images
+│   │   ├── css/
+│   │   ├── js/
+│   │   ├── images/
+│   │   └── vendor/
+│   └── uploads/                     # User-uploaded files (web-accessible)
+│       ├── images/
+│       ├── documents/
+│       ├── gallery/
+│       ├── slider/
+│       └── downloads/
+│
+├── admin/                           # Admin panel document root
+│   ├── index.php                    # Front controller (admin)
+│   └── assets/                      # AdminLTE theme assets
+│       ├── css/
+│       ├── js/
+│       ├── img/
+│       └── plugins/
+│
+├── app/
+│   ├── Core/                        # Framework kernel (Router, DB, Auth, base MVC)
+│   ├── Controllers/
+│   │   ├── Admin/                   # Admin controllers (role-protected)
+│   │   │   # Auth, Dashboard, Menu, Page, Media, Department,
+│   │   │   # Iqac, Naac, Notice, Gallery, Download, Slider,
+│   │   │   # Setting, Seo, Backup, User
+│   │   └── Frontend/                # Public site controllers
+│   ├── Models/                      # PDO-backed models
+│   ├── Views/
+│   │   ├── admin/                   # AdminLTE views (per module)
+│   │   │   ├── layouts/
+│   │   │   ├── auth/                # Secure login
+│   │   │   ├── dashboard/
+│   │   │   ├── menus/               # Menu + Submenu management
+│   │   │   ├── pages/               # Dynamic pages + HTML editor
+│   │   │   ├── media/               # File upload manager
+│   │   │   ├── departments/         # Department module
+│   │   │   ├── iqac/                # IQAC module
+│   │   │   ├── naac/                # NAAC module
+│   │   │   ├── notices/             # Notice module
+│   │   │   ├── gallery/             # Gallery module
+│   │   │   ├── downloads/           # Download module
+│   │   │   ├── slider/              # Homepage slider
+│   │   │   ├── settings/            # Site settings
+│   │   │   ├── seo/                 # SEO settings
+│   │   │   ├── backup/              # Database backup
+│   │   │   └── users/               # Role-based admin users
+│   │   └── frontend/                # Public Bootstrap 5 views
+│   │       ├── layouts/
+│   │       ├── home/
+│   │       ├── pages/
+│   │       ├── departments/
+│   │       ├── iqac/
+│   │       ├── naac/
+│   │       ├── notices/
+│   │       ├── gallery/
+│   │       └── downloads/
+│   ├── Middleware/                  # Auth + Role middleware
+│   └── Helpers/                     # Shared helper functions
+│
+├── config/                          # app.php, database.php, constants
+├── routes/                          # web.php (public), admin.php
+├── database/
+│   ├── migrations/                  # SQL schema scripts
+│   ├── seeds/                       # Default admin / sample data
+│   └── backups/                     # Generated DB dumps
+└── storage/
+    ├── logs/
+    ├── cache/
+    └── sessions/
+
+Feature → folder map
+--------------------
+ 1. Secure Login ............ app/Views/admin/auth, Middleware, Core/Auth
+ 2. Role Based Admin ........ users/, Middleware/Role
+ 3. Menu Management ......... menus/
+ 4. Submenu Management ...... menus/ (nested)
+ 5. Dynamic Pages ........... pages/
+ 6. HTML Page Editor ........ pages/ (+ editor assets)
+ 7. File Upload Manager ..... media/, public/uploads/
+ 8. Department Module ....... departments/
+ 9. IQAC Module ............. iqac/
+10. NAAC Module ............. naac/
+11. Notice Module ........... notices/
+12. Gallery Module .......... gallery/
+13. Download Module ......... downloads/
+14. Homepage Slider ......... slider/
+15. Site Settings ........... settings/
+16. SEO Settings ............ seo/
+17. Backup Database ......... backup/, database/backups/
+
+Build order (incremental — do not implement all at once)
+--------------------------------------------------------
+  Step A: Core (PDO Database, Router, base Controller/Model, Session)
+  Step B: Config + database schema skeleton
+  Step C: Secure Login + Role middleware
+  Step D: Admin layout (AdminLTE) + Dashboard
+  Step E: Modules one-by-one (Menu → Pages → … → Backup)
