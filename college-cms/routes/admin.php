@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Controllers\Admin\AuthController;
 use App\Controllers\Admin\DashboardController;
 use App\Controllers\Admin\DepartmentController;
+use App\Controllers\Admin\IqacController;
 use App\Controllers\Admin\MenuController;
 use App\Controllers\Admin\NaacController;
 use App\Controllers\Admin\PageController;
@@ -72,3 +73,14 @@ $router->post('/naac/{id}/pages', [NaacController::class, 'storePage']);
 $router->get('/naac/{id}/pages/{pageId}/edit', [NaacController::class, 'editPage']);
 $router->post('/naac/{id}/pages/{pageId}/update', [NaacController::class, 'updatePage']);
 $router->post('/naac/{id}/pages/{pageId}/delete', [NaacController::class, 'deletePage']);
+
+// IQAC Module
+$router->get('/iqac', [IqacController::class, 'index']);
+$router->get('/iqac/committee', [IqacController::class, 'committee']);
+$router->post('/iqac/committee', [IqacController::class, 'updateCommittee']);
+$router->get('/iqac/{section}', [IqacController::class, 'sectionIndex']);
+$router->get('/iqac/{section}/create', [IqacController::class, 'sectionCreate']);
+$router->post('/iqac/{section}', [IqacController::class, 'sectionStore']);
+$router->get('/iqac/{section}/{id}/edit', [IqacController::class, 'sectionEdit']);
+$router->post('/iqac/{section}/{id}/update', [IqacController::class, 'sectionUpdate']);
+$router->post('/iqac/{section}/{id}/delete', [IqacController::class, 'sectionDestroy']);
