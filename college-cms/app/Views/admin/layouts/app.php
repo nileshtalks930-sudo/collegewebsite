@@ -4,6 +4,7 @@
 /** @var array|null $user */
 
 $user = $user ?? \App\Core\Auth::user();
+$roleLabel = $user['role_name'] ?? ucfirst(str_replace('_', ' ', (string) ($user['role_slug'] ?? $user['role'] ?? '')));
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -66,17 +67,25 @@ $user = $user ?? \App\Core\Auth::user();
                             <i class="nav-icon bi bi-person"></i>
                             <p>
                                 <?= e($user['name'] ?? 'Admin') ?>
-                                <br><small class="text-secondary"><?= e(ucfirst(str_replace('_', ' ', (string) ($user['role'] ?? '')))) ?></small>
+                                <br><small class="text-secondary"><?= e((string) $roleLabel) ?></small>
                             </p>
                         </span>
                     </li>
                     <li class="nav-header">MAIN</li>
                     <li class="nav-item">
-                        <a href="<?= e(url('dashboard')) ?>" class="nav-link active">
+                        <a href="<?= e(url('dashboard')) ?>" class="nav-link <?= nav_active('dashboard') ?>">
                             <i class="nav-icon bi bi-speedometer2"></i>
                             <p>Dashboard</p>
                         </a>
                     </li>
+                    <?php if (can('users.view')): ?>
+                        <li class="nav-item">
+                            <a href="<?= e(url('users')) ?>" class="nav-link <?= nav_active('users') ?>">
+                                <i class="nav-icon bi bi-people"></i>
+                                <p>Users</p>
+                            </a>
+                        </li>
+                    <?php endif; ?>
                     <li class="nav-header">MODULES</li>
                     <li class="nav-item">
                         <a href="#" class="nav-link disabled"><i class="nav-icon bi bi-list"></i><p>Menus</p></a>
@@ -102,6 +111,9 @@ $user = $user ?? \App\Core\Auth::user();
         </div>
         <div class="app-content">
             <div class="container-fluid">
+                <?php if ($flashError = flash('error')): ?>
+                    <div class="alert alert-danger"><?= e((string) $flashError) ?></div>
+                <?php endif; ?>
                 <?= $content ?>
             </div>
         </div>

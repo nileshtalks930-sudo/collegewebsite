@@ -34,7 +34,7 @@
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-start">
                     <div>
-                        <div class="fs-4 fw-semibold text-dark"><?= e(ucfirst(str_replace('_', ' ', (string) ($user['role'] ?? 'admin')))) ?></div>
+                        <div class="fs-4 fw-semibold text-dark"><?= e((string) ($user['role_name'] ?? ucfirst(str_replace('_', ' ', (string) ($user['role_slug'] ?? $user['role'] ?? 'admin'))))) ?></div>
                         <div class="text-dark">Your Role</div>
                     </div>
                     <i class="bi bi-person-badge fs-1 opacity-50 text-dark"></i>

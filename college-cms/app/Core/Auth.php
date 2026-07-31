@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Core;
 
 use App\Models\RememberToken;
+use App\Models\Role;
 use App\Models\User;
 
 final class Auth
@@ -23,7 +24,6 @@ final class Auth
             return false;
         }
 
-        // Rehash if algorithm/options changed
         if (password_needs_rehash($user['password'], PASSWORD_DEFAULT)) {
             User::updatePassword((int) $user['id'], password_hash($password, PASSWORD_DEFAULT));
         }
@@ -43,12 +43,7 @@ final class Auth
     {
         Session::regenerate(true);
         Session::set(self::SESSION_USER_ID, (int) $user['id']);
-        Session::set('auth_user', [
-            'id' => (int) $user['id'],
-            'name' => $user['name'],
-            'email' => $user['email'],
-            'role' => $user['role'],
-        ]);
+        Session::set('auth_user', self::toSessionUser($user));
     }
 
     public static function check(): bool
@@ -73,7 +68,7 @@ final class Auth
         }
 
         $cached = Session::get('auth_user');
-        if (is_array($cached)) {
+        if (is_array($cached) && isset($cached['role_slug'], $cached['permissions'])) {
             return $cached;
         }
 
@@ -83,15 +78,31 @@ final class Auth
             return null;
         }
 
-        $lite = [
-            'id' => (int) $user['id'],
-            'name' => $user['name'],
-            'email' => $user['email'],
-            'role' => $user['role'],
-        ];
+        $lite = self::toSessionUser($user);
         Session::set('auth_user', $lite);
 
         return $lite;
+    }
+
+    public static function can(string $permission): bool
+    {
+        $user = self::user();
+        if ($user === null) {
+            return false;
+        }
+
+        if (($user['role_slug'] ?? '') === 'super_admin') {
+            return true;
+        }
+
+        $permissions = $user['permissions'] ?? [];
+        return is_array($permissions) && in_array($permission, $permissions, true);
+    }
+
+    public static function hasRole(string $slug): bool
+    {
+        $user = self::user();
+        return $user !== null && ($user['role_slug'] ?? '') === $slug;
     }
 
     public static function logout(): void
@@ -101,6 +112,25 @@ final class Auth
         Session::remove(self::SESSION_USER_ID);
         Session::remove('auth_user');
         Session::regenerate(true);
+    }
+
+    /** @return array{id:int,name:string,email:string,role_id:int,role:string,role_slug:string,role_name:string,permissions:list<string>} */
+    private static function toSessionUser(array $user): array
+    {
+        $roleId = (int) ($user['role_id'] ?? 0);
+        $slug = (string) ($user['role_slug'] ?? $user['role'] ?? '');
+        $name = (string) ($user['role_name'] ?? $slug);
+
+        return [
+            'id' => (int) $user['id'],
+            'name' => (string) $user['name'],
+            'email' => (string) $user['email'],
+            'role_id' => $roleId,
+            'role' => $slug,
+            'role_slug' => $slug,
+            'role_name' => $name,
+            'permissions' => $roleId > 0 ? Role::permissionSlugs($roleId) : [],
+        ];
     }
 
     private static function createRememberToken(int $userId): void
@@ -160,7 +190,6 @@ final class Auth
             return false;
         }
 
-        // Rotate remember token
         RememberToken::deleteBySelector($selector);
         self::loginUser($user);
         self::createRememberToken((int) $user['id']);
