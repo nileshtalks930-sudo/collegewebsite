@@ -24,7 +24,8 @@ CREATE TABLE IF NOT EXISTS `menus` (
   `parent_id` INT UNSIGNED NULL DEFAULT NULL,
   `status` TINYINT(1) NOT NULL DEFAULT 1 COMMENT '1=active,0=inactive',
   `open_in_new_tab` TINYINT(1) NOT NULL DEFAULT 0,
-  `link_type` ENUM('url', 'page') NOT NULL DEFAULT 'url',
+  `link_type` ENUM('url', 'page') NOT NULL DEFAULT 'url'
+    COMMENT 'Expanded in 009_menu_link_targets.sql',
   `url` VARCHAR(500) NULL DEFAULT NULL,
   `page_id` INT UNSIGNED NULL DEFAULT NULL,
   `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,

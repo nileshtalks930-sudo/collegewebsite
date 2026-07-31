@@ -155,7 +155,15 @@ final class Page extends Model
 
         $stmt = $pdo->prepare(
             'UPDATE menus
-             SET page_id = :page_id, link_type = \'page\', url = NULL, updated_at = NOW()
+             SET page_id = :page_id,
+                 link_type = \'page\',
+                 url = NULL,
+                 department_id = NULL,
+                 naac_criterion_id = NULL,
+                 iqac_section = NULL,
+                 download_id = NULL,
+                 gallery_id = NULL,
+                 updated_at = NOW()
              WHERE id = :menu_id'
         );
         $stmt->execute(['page_id' => $pageId, 'menu_id' => $menuId]);

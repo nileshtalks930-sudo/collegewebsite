@@ -32,6 +32,15 @@ final class Department extends Model
         return $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
     }
 
+    /** @return list<array{id:int|string,name:string,slug:string}> */
+    public static function allActive(): array
+    {
+        $stmt = self::db()->query(
+            'SELECT id, name, slug FROM departments WHERE status = 1 ORDER BY name ASC'
+        );
+        return $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
+    }
+
     public static function findById(int $id): ?array
     {
         $stmt = self::db()->prepare('SELECT * FROM departments WHERE id = :id LIMIT 1');
