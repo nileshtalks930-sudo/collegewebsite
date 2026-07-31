@@ -71,7 +71,8 @@ college-cms/
 ├── config/                          # app.php, database.php, constants
 ├── routes/                          # web.php (public), admin.php
 ├── database/
-│   ├── migrations/                  # SQL schema scripts
+│   ├── schema.sql                   # Complete MySQL schema (fresh install)
+│   ├── migrations/                  # Incremental SQL schema scripts
 │   ├── seeds/                       # Default admin / sample data
 │   └── backups/                     # Generated DB dumps
 └── storage/
