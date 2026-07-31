@@ -25,7 +25,7 @@
             </div>
             <div class="mb-3">
                 <label class="form-label" for="description">Description</label>
-                <textarea name="description" id="description" class="form-control" rows="10"><?= e((string) ($committee['description'] ?? '')) ?></textarea>
+                <textarea name="description" id="description" class="form-control cms-editor" rows="10"><?= e((string) ($committee['description'] ?? '')) ?></textarea>
             </div>
             <div class="mb-3">
                 <label class="form-label" for="vision">Vision</label>
@@ -45,16 +45,3 @@
     </div>
 </form>
 
-<script src="https://cdn.jsdelivr.net/npm/tinymce@6.8.4/tinymce.min.js" referrerpolicy="origin"></script>
-<script>
-tinymce.init({
-    selector: '#description',
-    height: 300,
-    menubar: false,
-    plugins: 'lists link table code',
-    toolbar: 'undo redo | styles | bold italic | bullist numlist | link | code',
-    branding: false,
-    promotion: false,
-    convert_urls: false,
-});
-</script>

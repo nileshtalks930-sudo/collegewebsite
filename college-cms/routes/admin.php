@@ -88,6 +88,8 @@ $router->post('/iqac/{section}/{id}/delete', [IqacController::class, 'sectionDes
 
 // File Manager
 $router->get('/media', [MediaController::class, 'index']);
+$router->get('/media/picker', [MediaController::class, 'picker']);
+$router->post('/media/editor-upload', [MediaController::class, 'editorUpload']);
 $router->post('/media/folders', [MediaController::class, 'createFolder']);
 $router->post('/media/folders/{id}/delete', [MediaController::class, 'deleteFolder']);
 $router->post('/media/upload', [MediaController::class, 'upload']);

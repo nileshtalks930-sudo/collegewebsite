@@ -169,5 +169,14 @@ $roleLabel = $user['role_name'] ?? ucfirst(str_replace('_', ' ', (string) ($user
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.10.1/browser/overlayscrollbars.browser.es6.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/admin-lte@4.0.0-rc4/dist/js/adminlte.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/tinymce@6.8.4/tinymce.min.js" referrerpolicy="origin"></script>
+<script>
+window.CollegeCmsEditorConfig = {
+    uploadUrl: <?= json_encode(url('media/editor-upload'), JSON_UNESCAPED_SLASHES) ?>,
+    pickerUrl: <?= json_encode(url('media/picker'), JSON_UNESCAPED_SLASHES) ?>,
+    csrfToken: <?= json_encode(\App\Core\Csrf::token()) ?>
+};
+</script>
+<script src="<?= e(admin_asset('js/tinymce-cms.js')) ?>"></script>
 </body>
 </html>

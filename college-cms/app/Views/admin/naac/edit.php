@@ -54,7 +54,7 @@ $pages = $criterion['pages'] ?? [];
                     </div>
                     <div class="mb-0">
                         <label class="form-label" for="description">Description</label>
-                        <textarea name="description" id="description" rows="12" class="form-control"><?= e($description) ?></textarea>
+                        <textarea name="description" id="description" rows="12" class="form-control cms-editor"><?= e($description) ?></textarea>
                     </div>
                 </div>
             </div>
@@ -275,20 +275,8 @@ $pages = $criterion['pages'] ?? [];
     </div>
 </template>
 
-<script src="https://cdn.jsdelivr.net/npm/tinymce@6.8.4/tinymce.min.js" referrerpolicy="origin"></script>
 <script>
 (() => {
-    tinymce.init({
-        selector: '#description',
-        height: 320,
-        menubar: false,
-        plugins: 'lists link table code',
-        toolbar: 'undo redo | styles | bold italic | bullist numlist | link table | code',
-        branding: false,
-        promotion: false,
-        convert_urls: false,
-    });
-
     function bindRemove(scope) {
         scope.querySelectorAll('.remove-row').forEach((btn) => {
             btn.onclick = () => btn.closest('.link-row, .table-row')?.remove();

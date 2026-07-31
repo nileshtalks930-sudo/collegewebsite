@@ -48,7 +48,7 @@ $pdf = $isEdit ? (string) ($page['pdf_attachment'] ?? '') : '';
                     </div>
                     <div class="mb-0">
                         <label class="form-label" for="content">HTML Content</label>
-                        <textarea name="content" id="content" class="form-control" rows="18"><?= e($contentVal) ?></textarea>
+                        <textarea name="content" id="content" class="form-control cms-editor" rows="18"><?= e($contentVal) ?></textarea>
                     </div>
                 </div>
             </div>
@@ -149,7 +149,6 @@ $pdf = $isEdit ? (string) ($page['pdf_attachment'] ?? '') : '';
     </div>
 </form>
 
-<script src="https://cdn.jsdelivr.net/npm/tinymce@6.8.4/tinymce.min.js" referrerpolicy="origin"></script>
 <script>
 (() => {
     const titleInput = document.getElementById('title');
@@ -165,18 +164,6 @@ $pdf = $isEdit ? (string) ($page['pdf_attachment'] ?? '') : '';
             .trim()
             .replace(/[^a-z0-9]+/g, '-')
             .replace(/^-+|-+$/g, '');
-    });
-
-    tinymce.init({
-        selector: '#content',
-        height: 420,
-        menubar: 'file edit view insert format tools table',
-        plugins: 'advlist autolink lists link image charmap preview anchor searchreplace visualblocks code fullscreen insertdatetime media table wordcount',
-        toolbar: 'undo redo | styles | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media table | code fullscreen',
-        branding: false,
-        promotion: false,
-        convert_urls: false,
-        content_style: 'body { font-family: Source Sans 3, Helvetica, Arial, sans-serif; font-size: 15px }',
     });
 })();
 </script>
