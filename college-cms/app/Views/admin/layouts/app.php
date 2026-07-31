@@ -127,6 +127,14 @@ $roleLabel = $user['role_name'] ?? ucfirst(str_replace('_', ' ', (string) ($user
                             </a>
                         </li>
                     <?php endif; ?>
+                    <?php if (can('media.view')): ?>
+                        <li class="nav-item">
+                            <a href="<?= e(url('media')) ?>" class="nav-link <?= nav_active('media') ?>">
+                                <i class="nav-icon bi bi-folder2-open"></i>
+                                <p>File Manager</p>
+                            </a>
+                        </li>
+                    <?php endif; ?>
                     <li class="nav-item">
                         <a href="#" class="nav-link disabled"><i class="nav-icon bi bi-gear"></i><p>Settings</p></a>
                     </li>

@@ -6,6 +6,7 @@ use App\Controllers\Admin\AuthController;
 use App\Controllers\Admin\DashboardController;
 use App\Controllers\Admin\DepartmentController;
 use App\Controllers\Admin\IqacController;
+use App\Controllers\Admin\MediaController;
 use App\Controllers\Admin\MenuController;
 use App\Controllers\Admin\NaacController;
 use App\Controllers\Admin\PageController;
@@ -84,3 +85,11 @@ $router->post('/iqac/{section}', [IqacController::class, 'sectionStore']);
 $router->get('/iqac/{section}/{id}/edit', [IqacController::class, 'sectionEdit']);
 $router->post('/iqac/{section}/{id}/update', [IqacController::class, 'sectionUpdate']);
 $router->post('/iqac/{section}/{id}/delete', [IqacController::class, 'sectionDestroy']);
+
+// File Manager
+$router->get('/media', [MediaController::class, 'index']);
+$router->post('/media/folders', [MediaController::class, 'createFolder']);
+$router->post('/media/folders/{id}/delete', [MediaController::class, 'deleteFolder']);
+$router->post('/media/upload', [MediaController::class, 'upload']);
+$router->post('/media/files/{id}/replace', [MediaController::class, 'replace']);
+$router->post('/media/files/{id}/delete', [MediaController::class, 'destroy']);
