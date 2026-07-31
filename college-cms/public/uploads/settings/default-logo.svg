@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="240" viewBox="0 0 240 240" role="img" aria-label="College logo">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f2744"/>
+      <stop offset="100%" stop-color="#1f6f5b"/>
+    </linearGradient>
+  </defs>
+  <rect width="240" height="240" rx="28" fill="url(#g)"/>
+  <path d="M40 150 L120 70 L200 150 Z" fill="none" stroke="#f7faf8" stroke-width="10" stroke-linejoin="round"/>
+  <rect x="98" y="128" width="44" height="42" rx="4" fill="#f7faf8"/>
+  <circle cx="120" cy="108" r="10" fill="#c45c26"/>
+  <text x="120" y="210" text-anchor="middle" fill="#f7faf8" font-family="Georgia, serif" font-size="28" font-weight="700">COLLEGE</text>
+</svg>

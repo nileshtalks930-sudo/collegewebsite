@@ -20,38 +20,39 @@ CREATE TABLE IF NOT EXISTS `settings` (
 -- Seed defaults (idempotent)
 INSERT INTO `settings` (`setting_key`, `setting_value`, `setting_group`, `label`, `created_at`) VALUES
   -- General
-  ('website_name', 'College Website', 'general', 'Website Name', NOW()),
-  ('logo', NULL, 'general', 'Logo', NOW()),
-  ('favicon', NULL, 'general', 'Favicon', NOW()),
+  ('website_name', 'Nilesh College', 'general', 'Website Name', NOW()),
+  ('logo', 'uploads/settings/default-logo.svg', 'general', 'Logo', NOW()),
+  ('favicon', 'uploads/settings/default-favicon.svg', 'general', 'Favicon', NOW()),
 
   -- Contact
-  ('address', NULL, 'contact', 'Address', NOW()),
-  ('email', NULL, 'contact', 'Email', NOW()),
-  ('phone', NULL, 'contact', 'Phone', NOW()),
-  ('google_map', NULL, 'contact', 'Google Map Embed / URL', NOW()),
+  ('address', 'College Road, City, State — 400001\nIndia', 'contact', 'Address', NOW()),
+  ('email', 'info@nileshcollege.edu', 'contact', 'Email', NOW()),
+  ('phone', '+91 98765 43210', 'contact', 'Phone', NOW()),
+  ('google_map', 'https://maps.google.com/?q=College+Road', 'contact', 'Google Map Embed / URL', NOW()),
 
   -- Social Links
-  ('social_facebook', NULL, 'social', 'Facebook', NOW()),
-  ('social_twitter', NULL, 'social', 'Twitter / X', NOW()),
-  ('social_instagram', NULL, 'social', 'Instagram', NOW()),
-  ('social_youtube', NULL, 'social', 'YouTube', NOW()),
-  ('social_linkedin', NULL, 'social', 'LinkedIn', NOW()),
+  ('social_facebook', 'https://facebook.com/', 'social', 'Facebook', NOW()),
+  ('social_twitter', 'https://x.com/', 'social', 'Twitter / X', NOW()),
+  ('social_instagram', 'https://instagram.com/', 'social', 'Instagram', NOW()),
+  ('social_youtube', 'https://youtube.com/', 'social', 'YouTube', NOW()),
+  ('social_linkedin', 'https://linkedin.com/', 'social', 'LinkedIn', NOW()),
 
   -- SMTP
-  ('smtp_host', NULL, 'smtp', 'SMTP Host', NOW()),
+  ('smtp_host', 'smtp.gmail.com', 'smtp', 'SMTP Host', NOW()),
   ('smtp_port', '587', 'smtp', 'SMTP Port', NOW()),
-  ('smtp_username', NULL, 'smtp', 'SMTP Username', NOW()),
+  ('smtp_username', 'info@nileshcollege.edu', 'smtp', 'SMTP Username', NOW()),
   ('smtp_password', NULL, 'smtp', 'SMTP Password', NOW()),
   ('smtp_encryption', 'tls', 'smtp', 'SMTP Encryption', NOW()),
-  ('smtp_from_email', NULL, 'smtp', 'From Email', NOW()),
-  ('smtp_from_name', NULL, 'smtp', 'From Name', NOW()),
+  ('smtp_from_email', 'info@nileshcollege.edu', 'smtp', 'From Email', NOW()),
+  ('smtp_from_name', 'Nilesh College', 'smtp', 'From Name', NOW()),
 
   -- Analytics
   ('analytics_code', NULL, 'analytics', 'Analytics Code', NOW()),
 
   -- Footer
-  ('footer_text', NULL, 'footer', 'Footer Text', NOW()),
-  ('copyright', '© College. All rights reserved.', 'footer', 'Copyright', NOW())
+  ('footer_text', 'Nilesh College is committed to academic excellence, research, and community service.', 'footer', 'Footer Text', NOW()),
+  ('copyright', '© 2026 Nilesh College. All rights reserved.', 'footer', 'Copyright', NOW())
 ON DUPLICATE KEY UPDATE
+  `setting_value` = IF(`setting_value` IS NULL OR `setting_value` = '', VALUES(`setting_value`), `setting_value`),
   `label` = VALUES(`label`),
   `setting_group` = VALUES(`setting_group`);
