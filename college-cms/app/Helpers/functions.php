@@ -123,3 +123,8 @@ function nav_active(string $prefix): string
     }
     return $path === $prefix || str_starts_with($path, $prefix . '/') ? 'active' : '';
 }
+
+function setting(string $key, ?string $default = null): ?string
+{
+    return \App\Models\Setting::get($key, $default);
+}

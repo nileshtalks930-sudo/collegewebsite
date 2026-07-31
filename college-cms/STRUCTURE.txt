@@ -95,7 +95,7 @@ Feature → folder map
 12. Gallery Module .......... gallery/
 13. Download Module ......... downloads/
 14. Homepage Slider ......... slider/
-15. Site Settings ........... settings/
+15. Site Settings ........... settings/ (+ 009_settings.sql)
 16. SEO Settings ............ seo/
 17. Backup Database ......... backup/, database/backups/
 
