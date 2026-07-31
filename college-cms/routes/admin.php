@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Controllers\Admin\AuthController;
 use App\Controllers\Admin\DashboardController;
+use App\Controllers\Admin\MenuController;
 use App\Controllers\Admin\UserController;
 use App\Core\Router;
 
@@ -29,3 +30,12 @@ $router->post('/users', [UserController::class, 'store']);
 $router->get('/users/{id}/edit', [UserController::class, 'edit']);
 $router->post('/users/{id}/update', [UserController::class, 'update']);
 $router->post('/users/{id}/delete', [UserController::class, 'destroy']);
+
+// Menu Management
+$router->get('/menus', [MenuController::class, 'index']);
+$router->get('/menus/create', [MenuController::class, 'create']);
+$router->post('/menus', [MenuController::class, 'store']);
+$router->post('/menus/reorder', [MenuController::class, 'reorder']);
+$router->get('/menus/{id}/edit', [MenuController::class, 'edit']);
+$router->post('/menus/{id}/update', [MenuController::class, 'update']);
+$router->post('/menus/{id}/delete', [MenuController::class, 'destroy']);

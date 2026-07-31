@@ -87,9 +87,14 @@ $roleLabel = $user['role_name'] ?? ucfirst(str_replace('_', ' ', (string) ($user
                         </li>
                     <?php endif; ?>
                     <li class="nav-header">MODULES</li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link disabled"><i class="nav-icon bi bi-list"></i><p>Menus</p></a>
-                    </li>
+                    <?php if (can('menus.view')): ?>
+                        <li class="nav-item">
+                            <a href="<?= e(url('menus')) ?>" class="nav-link <?= nav_active('menus') ?>">
+                                <i class="nav-icon bi bi-list"></i>
+                                <p>Menus</p>
+                            </a>
+                        </li>
+                    <?php endif; ?>
                     <li class="nav-item">
                         <a href="#" class="nav-link disabled"><i class="nav-icon bi bi-file-earmark-text"></i><p>Pages</p></a>
                     </li>
