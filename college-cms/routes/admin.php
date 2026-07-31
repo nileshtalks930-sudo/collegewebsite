@@ -10,6 +10,7 @@ use App\Controllers\Admin\MediaController;
 use App\Controllers\Admin\MenuController;
 use App\Controllers\Admin\NaacController;
 use App\Controllers\Admin\PageController;
+use App\Controllers\Admin\SettingController;
 use App\Controllers\Admin\UserController;
 use App\Core\Router;
 
@@ -93,3 +94,7 @@ $router->post('/media/folders/{id}/delete', [MediaController::class, 'deleteFold
 $router->post('/media/upload', [MediaController::class, 'upload']);
 $router->post('/media/files/{id}/replace', [MediaController::class, 'replace']);
 $router->post('/media/files/{id}/delete', [MediaController::class, 'destroy']);
+
+// Site Settings
+$router->get('/settings', [SettingController::class, 'index']);
+$router->post('/settings', [SettingController::class, 'update']);
