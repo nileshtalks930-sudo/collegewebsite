@@ -61,7 +61,7 @@ $status = array_key_exists('status', $old)
                     <div class="col-md-<?= $isTextarea ? '12' : '6' ?>">
                         <label class="form-label" for="<?= e($field) ?>"><?= e($label) ?></label>
                         <?php if ($isTextarea): ?>
-                            <textarea name="<?= e($field) ?>" id="<?= e($field) ?>" class="form-control" rows="<?= in_array($field, $richtext, true) ? 12 : 4 ?>"><?= e($value) ?></textarea>
+                            <textarea name="<?= e($field) ?>" id="<?= e($field) ?>" class="form-control<?= in_array($field, $richtext, true) ? ' cms-editor' : '' ?>" rows="<?= in_array($field, $richtext, true) ? 12 : 4 ?>"><?= e($value) ?></textarea>
                         <?php elseif ($isDate): ?>
                             <input type="date" name="<?= e($field) ?>" id="<?= e($field) ?>" class="form-control" value="<?= e($value) ?>">
                         <?php elseif ($field === 'sort_order'): ?>
@@ -115,19 +115,3 @@ $status = array_key_exists('status', $old)
         </div>
     </div>
 </form>
-
-<?php if ($richtext !== []): ?>
-<script src="https://cdn.jsdelivr.net/npm/tinymce@6.8.4/tinymce.min.js" referrerpolicy="origin"></script>
-<script>
-tinymce.init({
-    selector: '#<?= e(implode(', #', $richtext)) ?>',
-    height: 320,
-    menubar: false,
-    plugins: 'lists link table code',
-    toolbar: 'undo redo | styles | bold italic | bullist numlist | link | code',
-    branding: false,
-    promotion: false,
-    convert_urls: false,
-});
-</script>
-<?php endif; ?>

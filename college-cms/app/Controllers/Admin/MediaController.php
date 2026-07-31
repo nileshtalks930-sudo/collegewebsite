@@ -229,6 +229,104 @@ final class MediaController extends Controller
         $this->redirect($this->folderRedirect($folderId));
     }
 
+    /**
+     * TinyMCE image upload endpoint.
+     * Returns JSON: { location: "https://..." }
+     */
+    public function editorUpload(): void
+    {
+        RoleMiddleware::permission('media.manage');
+
+        $token = $_POST['_token'] ?? ($_SERVER['HTTP_X_CSRF_TOKEN'] ?? null);
+        if (!Csrf::validate(is_string($token) ? $token : null)) {
+            $this->json(['error' => 'Invalid security token.'], 419);
+        }
+
+        $fileKey = isset($_FILES['file']) ? 'file' : (isset($_FILES['image']) ? 'image' : null);
+        if ($fileKey === null) {
+            $this->json(['error' => 'No image uploaded.'], 422);
+        }
+
+        $upload = Uploader::store(
+            $_FILES[$fileKey] ?? [],
+            'media/editor',
+            ['jpg', 'jpeg', 'png', 'gif', 'webp'],
+            ['image/jpeg', 'image/png', 'image/gif', 'image/webp'],
+            Media::MAX_BYTES
+        );
+
+        if ($upload['skipped'] || $upload['path'] === null || $upload['error'] !== null) {
+            $this->json(['error' => $upload['error'] ?? 'Upload failed.'], 422);
+        }
+
+        $full = base_path('public/' . ltrim($upload['path'], '/'));
+        $ext = strtolower(pathinfo($upload['path'], PATHINFO_EXTENSION));
+        $mime = is_file($full) ? (new \finfo(FILEINFO_MIME_TYPE))->file($full) : null;
+        $original = (string) ($_FILES[$fileKey]['name'] ?? basename($upload['path']));
+
+        Media::createFile([
+            'folder_id' => null,
+            'original_name' => $original,
+            'stored_name' => basename($upload['path']),
+            'file_path' => $upload['path'],
+            'extension' => $ext,
+            'mime_type' => $mime,
+            'size_bytes' => is_file($full) ? (int) filesize($full) : 0,
+        ]);
+
+        $this->json([
+            'location' => absolute_url(upload_url($upload['path'])),
+        ]);
+    }
+
+    /** TinyMCE file browser popup. */
+    public function picker(): void
+    {
+        RoleMiddleware::permission('media.view');
+
+        $type = trim((string) ($_GET['type'] ?? 'file')); // file|image|media
+        if (!in_array($type, ['file', 'image', 'media'], true)) {
+            $type = 'file';
+        }
+
+        $folderId = isset($_GET['folder']) && $_GET['folder'] !== '' ? (int) $_GET['folder'] : null;
+        $search = trim((string) ($_GET['q'] ?? ''));
+
+        if ($folderId !== null && Media::findFolder($folderId) === null) {
+            $folderId = null;
+        }
+
+        if ($search !== '') {
+            $files = Media::searchAll($search);
+            $folders = [];
+        } else {
+            $folders = Media::folders($folderId);
+            $files = Media::filesInFolder($folderId);
+        }
+
+        $files = array_values(array_filter($files, static function (array $file) use ($type): bool {
+            $ext = strtolower((string) $file['extension']);
+            return match ($type) {
+                'image' => in_array($ext, ['jpg', 'jpeg', 'png', 'gif', 'webp'], true),
+                'media' => in_array($ext, ['jpg', 'jpeg', 'png', 'gif', 'webp', 'mp4', 'webm', 'pdf'], true),
+                default => true,
+            };
+        }));
+
+        $this->view('admin.media.picker', [
+            'title' => 'File Browser',
+            'type' => $type,
+            'folders' => $folders,
+            'files' => $files,
+            'folderId' => $folderId,
+            'breadcrumb' => Media::breadcrumb($folderId),
+            'search' => $search,
+            'canManage' => Auth::can('media.manage'),
+            'csrfToken' => Csrf::token(),
+            'uploadUrl' => url('media/editor-upload'),
+        ]);
+    }
+
     private function folderRedirect(?int $folderId): string
     {
         return $folderId === null ? 'media' : 'media?folder=' . $folderId;

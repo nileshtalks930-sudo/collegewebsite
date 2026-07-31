@@ -99,6 +99,22 @@ function upload_url(?string $relativePath): string
     return public_url(ltrim($relativePath, '/'));
 }
 
+function absolute_url(string $path): string
+{
+    if (str_starts_with($path, 'http://') || str_starts_with($path, 'https://')) {
+        return $path;
+    }
+
+    $scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
+    $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
+    return $scheme . '://' . $host . '/' . ltrim($path, '/');
+}
+
+function admin_asset(string $path): string
+{
+    return url('assets/' . ltrim($path, '/'));
+}
+
 function can(string $permission): bool
 {
     return \App\Core\Auth::can($permission);

@@ -59,7 +59,7 @@ $achievementRows = is_array($old['achievements'] ?? null) && $old['achievements'
                         </div>
                         <div class="col-12">
                             <label class="form-label" for="description">Description</label>
-                            <textarea name="description" id="description" class="form-control" rows="12"><?= e($description) ?></textarea>
+                            <textarea name="description" id="description" class="form-control cms-editor" rows="12"><?= e($description) ?></textarea>
                         </div>
                     </div>
                 </div>
@@ -307,7 +307,6 @@ $achievementRows = is_array($old['achievements'] ?? null) && $old['achievements'
     </div>
 </template>
 
-<script src="https://cdn.jsdelivr.net/npm/tinymce@6.8.4/tinymce.min.js" referrerpolicy="origin"></script>
 <script>
 (() => {
     const nameInput = document.getElementById('name');
@@ -317,17 +316,6 @@ $achievementRows = is_array($old['achievements'] ?? null) && $old['achievements'
     nameInput.addEventListener('input', () => {
         if (slugTouched) return;
         slugInput.value = nameInput.value.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
-    });
-
-    tinymce.init({
-        selector: '#description',
-        height: 320,
-        menubar: false,
-        plugins: 'lists link table code',
-        toolbar: 'undo redo | styles | bold italic | bullist numlist | link table | code',
-        branding: false,
-        promotion: false,
-        convert_urls: false,
     });
 
     function bindRemove(root) {

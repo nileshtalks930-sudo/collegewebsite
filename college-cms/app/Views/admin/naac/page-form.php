@@ -43,7 +43,7 @@ $status = array_key_exists('status', $old) ? (int) $old['status'] : (int) ($page
             </div>
             <div class="mb-3">
                 <label class="form-label" for="content">Content</label>
-                <textarea name="content" id="content" class="form-control" rows="16"><?= e($contentVal) ?></textarea>
+                <textarea name="content" id="content" class="form-control cms-editor" rows="16"><?= e($contentVal) ?></textarea>
             </div>
             <div class="form-check mb-3">
                 <input class="form-check-input" type="checkbox" name="status" value="1" id="status"
@@ -55,7 +55,6 @@ $status = array_key_exists('status', $old) ? (int) $old['status'] : (int) ($page
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/tinymce@6.8.4/tinymce.min.js" referrerpolicy="origin"></script>
 <script>
 (() => {
     const titleInput = document.getElementById('title');
@@ -65,17 +64,6 @@ $status = array_key_exists('status', $old) ? (int) $old['status'] : (int) ($page
     titleInput.addEventListener('input', () => {
         if (touched) return;
         slugInput.value = titleInput.value.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
-    });
-
-    tinymce.init({
-        selector: '#content',
-        height: 380,
-        menubar: false,
-        plugins: 'lists link table image code',
-        toolbar: 'undo redo | styles | bold italic | bullist numlist | link table image | code',
-        branding: false,
-        promotion: false,
-        convert_urls: false,
     });
 })();
 </script>
