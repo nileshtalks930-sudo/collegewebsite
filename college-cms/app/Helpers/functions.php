@@ -72,6 +72,33 @@ function asset(string $path): string
     return url('assets/' . ltrim($path, '/'));
 }
 
+function public_url(string $path = ''): string
+{
+    $configured = (string) (app_config('public_url') ?? '');
+    if ($configured !== '') {
+        return rtrim($configured, '/') . '/' . ltrim($path, '/');
+    }
+
+    $script = $_SERVER['SCRIPT_NAME'] ?? '/admin/index.php';
+    $adminBase = str_replace('\\', '/', dirname($script));
+    if (str_ends_with($adminBase, '/admin')) {
+        $publicBase = substr($adminBase, 0, -6) . '/public';
+    } else {
+        $publicBase = $adminBase . '/../public';
+    }
+
+    $path = ltrim($path, '/');
+    return rtrim($publicBase, '/') . ($path === '' ? '' : '/' . $path);
+}
+
+function upload_url(?string $relativePath): string
+{
+    if ($relativePath === null || $relativePath === '') {
+        return '';
+    }
+    return public_url(ltrim($relativePath, '/'));
+}
+
 function can(string $permission): bool
 {
     return \App\Core\Auth::can($permission);

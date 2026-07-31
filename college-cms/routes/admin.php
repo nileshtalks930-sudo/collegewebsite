@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Controllers\Admin\AuthController;
 use App\Controllers\Admin\DashboardController;
 use App\Controllers\Admin\MenuController;
+use App\Controllers\Admin\PageController;
 use App\Controllers\Admin\UserController;
 use App\Core\Router;
 
@@ -39,3 +40,11 @@ $router->post('/menus/reorder', [MenuController::class, 'reorder']);
 $router->get('/menus/{id}/edit', [MenuController::class, 'edit']);
 $router->post('/menus/{id}/update', [MenuController::class, 'update']);
 $router->post('/menus/{id}/delete', [MenuController::class, 'destroy']);
+
+// Page Builder
+$router->get('/pages', [PageController::class, 'index']);
+$router->get('/pages/create', [PageController::class, 'create']);
+$router->post('/pages', [PageController::class, 'store']);
+$router->get('/pages/{id}/edit', [PageController::class, 'edit']);
+$router->post('/pages/{id}/update', [PageController::class, 'update']);
+$router->post('/pages/{id}/delete', [PageController::class, 'destroy']);

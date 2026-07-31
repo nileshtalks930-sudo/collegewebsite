@@ -7,6 +7,7 @@ return [
     'env' => 'local',
     'debug' => true,
     'url' => '', // e.g. http://localhost/college-cms/admin — leave blank to auto-detect
+    'public_url' => '', // e.g. http://localhost/college-cms/public — leave blank to auto-detect
     'timezone' => 'Asia/Kolkata',
     'session' => [
         'name' => 'college_cms_session',
