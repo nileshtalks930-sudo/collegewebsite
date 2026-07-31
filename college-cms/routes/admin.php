@@ -6,6 +6,7 @@ use App\Controllers\Admin\AuthController;
 use App\Controllers\Admin\DashboardController;
 use App\Controllers\Admin\DepartmentController;
 use App\Controllers\Admin\MenuController;
+use App\Controllers\Admin\NaacController;
 use App\Controllers\Admin\PageController;
 use App\Controllers\Admin\UserController;
 use App\Core\Router;
@@ -59,3 +60,15 @@ $router->post('/departments/{id}/update', [DepartmentController::class, 'update'
 $router->post('/departments/{id}/delete', [DepartmentController::class, 'destroy']);
 $router->post('/departments/{id}/downloads/{downloadId}/delete', [DepartmentController::class, 'deleteDownload']);
 $router->post('/departments/{id}/gallery/{imageId}/delete', [DepartmentController::class, 'deleteGallery']);
+
+// NAAC Module
+$router->get('/naac', [NaacController::class, 'index']);
+$router->get('/naac/{id}/edit', [NaacController::class, 'edit']);
+$router->post('/naac/{id}/update', [NaacController::class, 'update']);
+$router->post('/naac/{id}/files/{fileId}/delete', [NaacController::class, 'deleteFile']);
+$router->post('/naac/{id}/images/{imageId}/delete', [NaacController::class, 'deleteImage']);
+$router->get('/naac/{id}/pages/create', [NaacController::class, 'createPage']);
+$router->post('/naac/{id}/pages', [NaacController::class, 'storePage']);
+$router->get('/naac/{id}/pages/{pageId}/edit', [NaacController::class, 'editPage']);
+$router->post('/naac/{id}/pages/{pageId}/update', [NaacController::class, 'updatePage']);
+$router->post('/naac/{id}/pages/{pageId}/delete', [NaacController::class, 'deletePage']);
