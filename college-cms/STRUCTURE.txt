@@ -96,6 +96,7 @@ Feature → folder map
 13. Download Module ......... downloads/
 14. Homepage Slider ......... slider/
 15. Site Settings ........... settings/ (+ 009_settings.sql)
+    Database Config ......... settings/database (writes config/database.php)
 16. SEO Settings ............ seo/
 17. Backup Database ......... backup/, database/backups/
 

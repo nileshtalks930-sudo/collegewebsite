@@ -51,6 +51,11 @@ $readonly = !$canManage;
                             <i class="bi <?= e($tab['icon']) ?> me-2"></i><?= e($tab['label']) ?>
                         </button>
                     <?php endforeach; ?>
+                    <?php if ((\App\Core\Auth::user()['role_slug'] ?? '') === 'super_admin'): ?>
+                        <a href="<?= e(url('settings/database')) ?>" class="list-group-item list-group-item-action">
+                            <i class="bi bi-database me-2"></i>Database
+                        </a>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>

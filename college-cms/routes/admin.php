@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Controllers\Admin\AuthController;
 use App\Controllers\Admin\DashboardController;
+use App\Controllers\Admin\DatabaseConfigController;
 use App\Controllers\Admin\DepartmentController;
 use App\Controllers\Admin\IqacController;
 use App\Controllers\Admin\MediaController;
@@ -98,3 +99,6 @@ $router->post('/media/files/{id}/delete', [MediaController::class, 'destroy']);
 // Site Settings
 $router->get('/settings', [SettingController::class, 'index']);
 $router->post('/settings', [SettingController::class, 'update']);
+$router->get('/settings/database', [DatabaseConfigController::class, 'index']);
+$router->post('/settings/database', [DatabaseConfigController::class, 'update']);
+$router->post('/settings/database/test', [DatabaseConfigController::class, 'test']);
