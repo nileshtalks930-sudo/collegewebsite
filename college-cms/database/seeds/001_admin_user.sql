@@ -1,4 +1,5 @@
--- Seed default super admin (run after 002_roles_permissions.sql)
+-- Seed default super admin (kept for compatibility)
+-- Prefer: database/seeds/000_defaults.sql (full defaults)
 -- Password: Admin@123  (bcrypt)
 
 USE `college_cms`;

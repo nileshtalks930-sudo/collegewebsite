@@ -30,13 +30,24 @@ DATABASE
      Host: localhost
      DB:   nileshta_cmcs2
      User: nileshta_cmcs2
-2. Import ONE of:
-     - college-cms/database/schema.sql   (fresh / full schema)
-     - OR migrations 001 → 010 in order
-3. Import seed:
-     - college-cms/database/seeds/001_admin_user.sql
-4. Confirm config/database.php has your cPanel credentials
+2. Import in phpMyAdmin (in this order):
+     a) college-cms/database/schema.sql
+     b) college-cms/database/seeds/000_defaults.sql
+3. Confirm config/database.php has your cPanel credentials
    (delete college-cms/.preview-local if present — that file is only for local preview)
+
+DEFAULTS INCLUDED IN seeds/000_defaults.sql
+-------------------------------------------
+  Admin user:     admin@college.local / Admin@123
+  College name:   Nilesh College
+  Logo/Favicon:   uploads/settings/default-logo.svg
+                  uploads/settings/default-favicon.svg
+  Contact:        email, phone, address
+  Footer/Copyright
+  Starter pages:  About, Admissions, Contact
+  Header menus
+  Sample departments, notice, slider, quick links
+  NAAC criteria 1–7, IQAC committee stub
 
 ADMIN LOGIN
 -----------

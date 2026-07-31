@@ -864,4 +864,11 @@ CREATE TABLE `audit_logs` (
 
 -- =============================================================================
 -- End of schema
+--
+-- Next step — load default data (admin user, college name, logo, menus, etc.):
+--   SOURCE database/seeds/000_defaults.sql;
+--
+-- Default login after seeding:
+--   Email:    admin@college.local
+--   Password: Admin@123
 -- =============================================================================
