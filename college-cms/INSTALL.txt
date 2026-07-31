@@ -1,0 +1,60 @@
+College CMS — Shared Hosting Setup
+==================================
+
+FOLDER LAYOUT ON cPanel
+-----------------------
+Upload the college-cms folder so it looks like:
+
+  public_html/                 (or your domain document root)
+    ├── index.php              ← copy from college-cms/public/
+    ├── .htaccess              ← copy from college-cms/public/
+    ├── assets/
+    ├── uploads/
+    └── app/  admin/  config/  database/  routes/  storage/
+        (OR keep full college-cms/ and point domains as below)
+
+RECOMMENDED STRUCTURE
+---------------------
+  public_html/                 → contents of college-cms/public/
+  college-cms/                 → rest of the project (outside web root if possible)
+  public_html/admin/           → contents of college-cms/admin/
+                                (or subdomain admin.yourdomain.com → college-cms/admin)
+
+If everything stays inside public_html/college-cms/:
+  Website:  https://yourdomain.com/college-cms/public/
+  Admin:    https://yourdomain.com/college-cms/admin/
+
+DATABASE
+--------
+1. In cPanel → MySQL Databases, confirm DB:
+     Host: localhost
+     DB:   nileshta_cmcs2
+     User: nileshta_cmcs2
+2. Import ONE of:
+     - college-cms/database/schema.sql   (fresh / full schema)
+     - OR migrations 001 → 010 in order
+3. Import seed:
+     - college-cms/database/seeds/001_admin_user.sql
+4. Confirm config/database.php has your cPanel credentials
+   (delete college-cms/.preview-local if present — that file is only for local preview)
+
+ADMIN LOGIN
+-----------
+  URL:   /admin/login   (or /college-cms/admin/login)
+  Email: admin@college.local
+  Pass:  Admin@123
+
+Change this password after first login.
+
+COMMON PROBLEMS
+---------------
+- Seeing only "MVC scaffold ready" text:
+    Old public/index.php was a stub. Use the updated public site files.
+- Blank page / 500 error:
+    Enable display_errors temporarily, check error_log,
+    confirm PHP 8.1+, confirm DB import completed.
+- Login fails:
+    Users table empty — import seeds/001_admin_user.sql
+    and migrations/002_roles_permissions.sql
+- CSS missing:
+    Confirm assets/ folders uploaded; check file permissions (755 dirs, 644 files).

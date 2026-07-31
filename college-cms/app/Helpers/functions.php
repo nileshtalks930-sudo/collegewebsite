@@ -79,16 +79,19 @@ function public_url(string $path = ''): string
         return rtrim($configured, '/') . '/' . ltrim($path, '/');
     }
 
-    $script = $_SERVER['SCRIPT_NAME'] ?? '/admin/index.php';
-    $adminBase = str_replace('\\', '/', dirname($script));
-    if (str_ends_with($adminBase, '/admin')) {
-        $publicBase = substr($adminBase, 0, -6) . '/public';
-    } else {
-        $publicBase = $adminBase . '/../public';
+    $script = $_SERVER['SCRIPT_NAME'] ?? '/index.php';
+    $base = str_replace('\\', '/', dirname($script));
+    if ($base === '/' || $base === '\\') {
+        $base = '';
+    }
+
+    // When bootstrap is admin, map to sibling /public
+    if (str_ends_with($base, '/admin')) {
+        $base = substr($base, 0, -6) . '/public';
     }
 
     $path = ltrim($path, '/');
-    return rtrim($publicBase, '/') . ($path === '' ? '' : '/' . $path);
+    return ($base === '' ? '' : $base) . ($path === '' ? '' : '/' . $path);
 }
 
 function upload_url(?string $relativePath): string
