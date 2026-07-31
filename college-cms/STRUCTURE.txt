@@ -83,7 +83,7 @@ Feature → folder map
 --------------------
  1. Secure Login ............ app/Views/admin/auth, Middleware, Core/Auth
  2. Role Based Admin ........ users/, Middleware/Role
- 3. Menu Management ......... menus/
+ 3. Menu Management ......... menus/ (+ 009_menu_link_targets.sql)
  4. Submenu Management ...... menus/ (nested)
  5. Dynamic Pages ........... pages/
  6. HTML Page Editor ........ pages/ (+ editor assets)

@@ -13,9 +13,7 @@ $renderItems = static function (array $nodes, bool $canManage) use (&$renderItem
     echo '<ol class="menu-sortable list-unstyled mb-0">';
     foreach ($nodes as $node) {
         $href = \App\Models\Menu::resolveHref($node);
-        $badge = ($node['link_type'] ?? '') === 'page'
-            ? 'Page: ' . ($node['page_title'] ?? '')
-            : ($node['url'] ?? '');
+        $badge = \App\Models\Menu::linkBadge($node);
         echo '<li class="menu-item" data-id="' . (int) $node['id'] . '">';
         echo '<div class="menu-row d-flex align-items-center gap-2">';
         if ($canManage) {
